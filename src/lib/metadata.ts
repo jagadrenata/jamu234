@@ -3,12 +3,12 @@ import type { Metadata } from "next";
 export const siteMetadata: Metadata = {
   // Title ideal: 50–60 karakter
   title: {
-    default: "Jamu 234 – Jamu Tradisional Herbal Terbaik di Sleman Yogyakarta",
+    default: "Jamu 234 – Jamu Tradisional Herbal di Sleman Yogyakarta",
     template: "%s | Jamu 234 – Jamu Tradisional Herbal Sleman",
   },
 
   description:
-    "Jamu 234 menyajikan jamu tradisional herbal berkualitas dari empon-empon asli tanpa pemanis buatan. Toko jamu terpercaya di Sleman Yogyakarta untuk kesehatan dan kebugaran keluarga Indonesia.",
+    "Jamu 234 menghadirkan jamu tradisional dari empon-empon asli berkualitas tanpa pemanis buatan, menjaga daya tahan dan kebugaran tubuh secara alami.",
 
   metadataBase: new URL("https://jamu234.biz.id"),
   alternates: {
@@ -69,9 +69,9 @@ export const siteMetadata: Metadata = {
 
   // Open Graph (Masih Template)
   openGraph: {
-    title: "Jamu 234 – Jamu Tradisional Herbal Terbaik di Sleman Yogyakarta",
+    title: "Jamu 234 – Jamu Tradisional Herbal di Sleman Yogyakarta",
     description:
-      "Nikmati jamu tradisional herbal Jamu 234, diracik dari empon-empon pilihan berkualitas tanpa pemanis buatan. Toko jamu terpercaya di Sleman untuk kesehatan keluarga Indonesia.",
+      "Nikmati jamu tradisional Jamu 234, diracik dari empon-empon pilihan tanpa pemanis buatan, solusi alami untuk mendukung kesehatan dan kebugaran tubuh.",
     url: "https://jamu234.biz.id",
     siteName: "Jamu 234 - Jamu Tradisional Herbal Sleman",
     images: [
@@ -79,7 +79,7 @@ export const siteMetadata: Metadata = {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Jamu 234 – Jamu Tradisional Herbal Terbaik di Sleman Yogyakarta",
+        alt: "Jamu 234 – Jamu Tradisional Herbal di Sleman Yogyakarta",
       },
     ],
     locale: "id_ID",
@@ -89,9 +89,9 @@ export const siteMetadata: Metadata = {
   // Twitter Card (Masih Template)
   twitter: {
     card: "summary_large_image",
-    title: "Jamu 234 – Jamu Tradisional Herbal Terbaik di Sleman Yogyakarta",
+    title: "Jamu 234 – Jamu Tradisional Herbal Berkualitas di Sleman Yogyakarta",
     description:
-      "Nikmati jamu tradisional herbal Jamu 234, diracik dari empon-empon pilihan berkualitas tanpa pemanis buatan untuk kesehatan keluarga.",
+      "Nikmati jamu tradisional Jamu 234, diracik dari empon-empon pilihan tanpa pemanis buatan, solusi alami untuk mendukung kesehatan dan kebugaran tubuh.",
     creator: "@jagadrenata",
     images: ["/twitter-image.jpg"],
   },
@@ -157,7 +157,7 @@ export const seoKeywords = [
 
 export const businessInfo = {
   name: "Jamu 234",
-  description: "Toko jamu tradisional herbal terpercaya di Sleman Yogyakarta",
+  description: "Toko jamu tradisional herbal berkualitas di Sleman Yogyakarta",
   location: "Sleman, Yogyakarta, Indonesia",
   specialty: "Jamu herbal tradisional tanpa pemanis buatan",
   target: "Kesehatan dan kebugaran keluarga Indonesia",
