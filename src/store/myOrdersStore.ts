@@ -1,4 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+'use client'
+
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { supabase } from '@/lib/supabase'
@@ -14,36 +15,26 @@ type Order = {
 
 type MyOrdersStore = {
   myOrders: Order[]
-  setOrders: (orders: Order[]) => void
+  loading: boolean
+  fetchOrders: () => Promise<void>
   addOrder: (data: Order) => void
-  deleteOrder: (id: number) => Promise<void>
 }
 
 export const useMyOrdersStore = create<MyOrdersStore>()(
   persist(
     (set, get) => ({
       myOrders: [],
+      loading: false,
 
-      setOrders: (orders) => set({ myOrders: orders }),
+      // Ambil semua orders milik user login
+      fetchOrders: async () => {
 
-      addOrder: (data) => set({ myOrders: [...get().myOrders, data] }),
-
-      deleteOrder: async (id) => {
-        const {
-          data: { user },
-        } = await supabase.auth.getUser()
-
-        if (user) {
-          await supabase.from('orders').delete().eq('id', id).eq('user_id', user.id)
-        }
-
-        set({
-          myOrders: get().myOrders.filter((item) => item.id !== id),
-        })
       },
+
+      // Tambah order baru ke store
+      addOrder: (data) => set({ myOrders: [data, ...get().myOrders] }),
+
     }),
-    {
-      name: 'my-orders-storage',
-    },
+    { name: 'my-orders-storage' },
   ),
 )

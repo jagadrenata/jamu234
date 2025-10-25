@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import Cart from '@/components/Cart'
-import { bussinesInfo } from '@/data'
+import { businesInfo } from '@/data'
 import { HiMenu } from 'react-icons/hi'
 import { IoCartOutline, IoClose } from 'react-icons/io5'
 import Image from 'next/image'
@@ -60,8 +60,8 @@ const Navbar = () => {
           <div className='flex items-center justify-between'>
             {/* Logo */}
             <div className='logo flex items-center gap-2'>
-              <Image className='w-10 h-10' width={40} height={40} src={bussinesInfo.logoPath ?? '/234.png'} alt={`${bussinesInfo.name ?? 'bussinesInfo.name'} logo`} />
-              <span className='text-xl font-bold text-orange-500'>{bussinesInfo.name.charAt(0).toUpperCase() + bussinesInfo.name.slice(1).toLowerCase() ?? 'bussinesInfo.name'}</span>
+              <Image className='w-10 h-10' width={40} height={40} src={businesInfo.logoPath ?? '/234.png'} alt={`${businesInfo.name ?? 'businesInfo.name'} logo`} />
+              <span className='text-xl font-bold text-orange-500'>{businesInfo.name.charAt(0).toUpperCase() + businesInfo.name.slice(1).toLowerCase()}</span>
             </div>
 
             {/* Menu */}

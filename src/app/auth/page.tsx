@@ -3,7 +3,9 @@
 import { useAuthStore } from '@/store/store'
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabase'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { businesInfo } from '@/data'
 import { alertSuccess, alertError } from '@/lib/alert'
 
 export default function Home() {
@@ -60,7 +62,7 @@ export default function Home() {
     router.replace('/clientarea')
   }
 
-  const signUp = async (email: string, password: string): Promise<void>  => {
+  const signUp = async (email: string, password: string): Promise<void> => {
     setLoading(true)
     setError(null)
 
@@ -106,11 +108,18 @@ export default function Home() {
   }
 
   return (
-    <main className='p-4 w-screen h-screen justify-center items-center flex flex-col'>
-      {error && <p className='text-red-500'>{error}</p>}
-      {loading && <p>Loading...</p>}
+    <main className='p-4 w-screen h-screen justify-center items-center flex flex-col bg-gray-50'>
+      {/* Logo & Nama Bisnis */}
+      <div className='flex flex-col items-center mb-6'>
+        <Image src={businesInfo.logoPath ?? '/234.png'} alt='Logo Bisnis' width={64} height={64} className='rounded-lg' />
+        <h1 className='text-2xl font-semibold mt-2 text-gray-800'>{businesInfo.name.charAt(0).toUpperCase() + businesInfo.name.slice(1).toLowerCase()}</h1>
+      </div>
+
+      {error && <p className='text-red-500 mb-3'>{error}</p>}
+      {loading && <p>Memuat...</p>}
 
       {isSignup ? (
+        // Form Login
         <div className='w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8'>
           <form
             className='space-y-6'
@@ -120,10 +129,11 @@ export default function Home() {
               await signIn(data.email, data.password)
             }}
           >
-            <h5 className='text-xl font-medium text-gray-900 '>Login to our platform</h5>
+            <h5 className='text-xl font-medium text-gray-900'>Masuk ke platform kami</h5>
+
             <div>
-              <label htmlFor='email' className='block mb-2 text-sm font-medium text-gray-900 '>
-                Your email
+              <label htmlFor='email' className='block mb-2 text-sm font-medium text-gray-900'>
+                Email Anda
               </label>
               <input
                 type='email'
@@ -132,13 +142,14 @@ export default function Home() {
                 value={data.email}
                 onChange={(e) => setData((prev) => ({ ...prev, email: e.target.value }))}
                 className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5'
-                placeholder='name@company.com'
+                placeholder='nama@perusahaan.com'
                 required
               />
             </div>
+
             <div>
-              <label htmlFor='password' className='block mb-2 text-sm font-medium text-gray-900 '>
-                Your password
+              <label htmlFor='password' className='block mb-2 text-sm font-medium text-gray-900'>
+                Kata Sandi
               </label>
               <input
                 type='password'
@@ -147,38 +158,38 @@ export default function Home() {
                 placeholder='••••••••'
                 value={data.password}
                 onChange={(e) => setData((prev) => ({ ...prev, password: e.target.value }))}
-                className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5  '
+                className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5'
                 required
               />
             </div>
-            <div className='flex items-start'>
-              <div className='flex items-start'>
-                <div className='flex items-center h-5'>
-                  <input id='remember' type='checkbox' value='' className='w-4 h-4 border border-gray-300 rounded-sm bg-gray-50 focus:ring-3 focus:ring-gray-300' />
-                </div>
-                <label htmlFor='remember' className='ms-2 text-sm font-medium text-gray-900 '>
-                  Remember me
-                </label>
-              </div>
-              <a href='#' className='ms-auto text-sm text-blue-700 hover:underline '>
-                Lost Password?
+
+            <div className='flex items-start justify-between'>
+              <label className='flex items-center text-sm font-medium text-gray-900'>
+                <input id='remember' type='checkbox' className='w-4 h-4 border border-gray-300 rounded-sm bg-gray-50 focus:ring-3 focus:ring-gray-300 me-2' />
+                Ingat saya
+              </label>
+              <a href='#' className='text-sm text-blue-700 hover:underline'>
+                Lupa kata sandi?
               </a>
             </div>
+
             <button
               type='submit'
               className='w-full text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center'
             >
-              Login to your account
+              Masuk ke akun Anda
             </button>
-            <div className='text-sm font-medium text-gray-500'>
-              Not registered?{' '}
-              <button className='text-blue-700 hover:underline' onClick={() => setIsSignup(!isSignup)}>
-                Create account
+
+            <div className='text-sm font-medium text-gray-500 text-center'>
+              Belum punya akun?{' '}
+              <button type='button' className='text-blue-700 hover:underline' onClick={() => setIsSignup(!isSignup)}>
+                Daftar
               </button>
             </div>
           </form>
         </div>
       ) : (
+        // Form Daftar
         <div className='w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8'>
           <form
             className='space-y-6'
@@ -188,10 +199,11 @@ export default function Home() {
               await signUp(data.email, data.password)
             }}
           >
-            <h5 className='text-xl font-medium text-gray-900 '>Sign up to our platform</h5>
+            <h5 className='text-xl font-medium text-gray-900'>Daftar ke platform kami</h5>
+
             <div>
-              <label htmlFor='email' className='block mb-2 text-sm font-medium text-gray-900 '>
-                Your email
+              <label htmlFor='email' className='block mb-2 text-sm font-medium text-gray-900'>
+                Email Anda
               </label>
               <input
                 type='email'
@@ -199,14 +211,15 @@ export default function Home() {
                 id='email'
                 value={data.email}
                 onChange={(e) => setData((prev) => ({ ...prev, email: e.target.value }))}
-                className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5  '
-                placeholder='name@company.com'
+                className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5'
+                placeholder='nama@perusahaan.com'
                 required
               />
             </div>
+
             <div>
-              <label htmlFor='password' className='block mb-2 text-sm font-medium text-gray-900 '>
-                Your password
+              <label htmlFor='password' className='block mb-2 text-sm font-medium text-gray-900'>
+                Kata Sandi
               </label>
               <input
                 type='password'
@@ -215,20 +228,22 @@ export default function Home() {
                 placeholder='••••••••'
                 value={data.password}
                 onChange={(e) => setData((prev) => ({ ...prev, password: e.target.value }))}
-                className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5  '
+                className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5'
                 required
               />
             </div>
+
             <button
               type='submit'
-              className='w-full text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center '
+              className='w-full text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center'
             >
-              Sign Up to your account
+              Daftar Sekarang
             </button>
-            <div className='text-sm font-medium text-gray-500 '>
-              registered?{' '}
-              <button className='text-blue-700 hover:underline ' onClick={() => setIsSignup(!isSignup)}>
-                Login
+
+            <div className='text-sm font-medium text-gray-500 text-center'>
+              Sudah punya akun?{' '}
+              <button type='button' className='text-blue-700 hover:underline' onClick={() => setIsSignup(!isSignup)}>
+                Masuk
               </button>
             </div>
           </form>

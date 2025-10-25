@@ -1,19 +1,9 @@
 import { NextResponse } from 'next/server'
-import { createClient } from '@supabase/supabase-js'
-
-const supabase = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
 
 export async function POST(req: Request) {
   try {
     const body = await req.json()
     const { order_id, total_price, name, email, phone } = body
-
-    // Cek dulu apakah order_id sudah ada di database
-    //  const { data: existing, error: checkError } = await supabase.from('anon_orders').select('midtrans_url, midtrans_token').eq('id', order_id).single()
-
-    // if (checkError && checkError.code !== 'PGRST116') throw checkError
-
-    // Jika sudah ada transaksi sebelumnya → kirim ulang link lama
 
     // Buat transaksi baru di Midtrans
     const midtransUrl = 'https://app.sandbox.midtrans.com/snap/v1/transactions'
@@ -50,18 +40,6 @@ export async function POST(req: Request) {
 
     if (!response.ok) throw new Error(data.message || 'Midtrans API error')
 
-    // Simpan ke database
-    await supabase.from('anon_orders').insert([
-      {
-        id: order_id,
-        midtrans_token: data.token,
-        midtrans_url: data.redirect_url,
-        name,
-        email,
-        phone,
-        total_price,
-      },
-    ])
 
     // Balikin ke client
     return NextResponse.json({

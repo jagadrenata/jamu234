@@ -105,7 +105,7 @@ export const useCartsStore = create<CartsState>()(
         } = await supabase.auth.getUser()
 
         if (user) {
-          await supabase.from('carts').delete().eq('id', id).eq("user_id", user.id)
+          await supabase.from('carts').delete().eq('id', id).eq('user_id', user.id)
         }
 
         set({ carts: get().carts.filter((item) => item.id !== id) })
@@ -127,7 +127,8 @@ export const useCartsStore = create<CartsState>()(
         set({
           carts: get().carts.map((item) => (item.id === id ? { ...item, quantity } : item)),
         })
-        alertSuccess('Jumlah diperbarui', null, 1000)
+        await get().getCarts()
+        //alertSuccess('Jumlah diperbarui', null, 1000)
       },
       setCartDatas: (data) => set({ cartDatas: data }),
     }),

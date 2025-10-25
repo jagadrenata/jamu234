@@ -1,3 +1,4 @@
+/* eslint-disable */
 'use client'
 
 import { useState, useEffect } from 'react'
@@ -7,22 +8,10 @@ import { useRouteStore } from '@/store/routeStore'
 import 'leaflet/dist/leaflet.css'
 
 // Dynamic import Leaflet komponen (client-only)
-const MapContainer = dynamic(
-  () => import('react-leaflet').then((mod) => mod.MapContainer),
-  { ssr: false }
-)
-const TileLayer = dynamic(
-  () => import('react-leaflet').then((mod) => mod.TileLayer),
-  { ssr: false }
-)
-const Marker = dynamic(
-  () => import('react-leaflet').then((mod) => mod.Marker),
-  { ssr: false }
-)
-const Circle = dynamic(
-  () => import('react-leaflet').then((mod) => mod.Circle),
-  { ssr: false }
-)
+const MapContainer = dynamic(() => import('react-leaflet').then((mod) => mod.MapContainer), { ssr: false })
+const TileLayer = dynamic(() => import('react-leaflet').then((mod) => mod.TileLayer), { ssr: false })
+const Marker = dynamic(() => import('react-leaflet').then((mod) => mod.Marker), { ssr: false })
+const Circle = dynamic(() => import('react-leaflet').then((mod) => mod.Circle), { ssr: false })
 
 // useMapEvents tetap import normal
 import { useMapEvents as useMapEventsHook } from 'react-leaflet'
@@ -62,13 +51,7 @@ export default function EditAddress() {
       },
     })
 
-    return (
-      <Circle
-        center={center}
-        radius={maxDistance}
-        pathOptions={{ color: '#f97316', fillColor: '#ffedd5', fillOpacity: 0.3 }}
-      />
-    )
+    return <Circle center={center} radius={maxDistance} pathOptions={{ color: '#f97316', fillColor: '#ffedd5', fillOpacity: 0.3 }} />
   }
 
   // Jangan render apapun di server (Next.js build)
@@ -85,33 +68,21 @@ export default function EditAddress() {
         <div className='bg-white rounded-xl shadow p-5 md:p-6 space-y-6'>
           <div className='relative w-full h-[400px] md:h-[500px] rounded-xl overflow-hidden border'>
             <MapContainer center={center} zoom={14} className='h-full w-full'>
-              <TileLayer
-                attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
-                url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
-              />
+              <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors' url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' />
               <Marker position={position} />
               <LocationMarker />
             </MapContainer>
-            <div className='absolute top-3 right-3 bg-white/90 text-xs px-3 py-1 rounded-md shadow'>
-              Klik pada peta untuk memilih lokasi
-            </div>
+            <div className='absolute top-3 right-3 bg-white/90 text-xs px-3 py-1 rounded-md shadow'>Klik pada peta untuk memilih lokasi</div>
           </div>
 
           <div className='grid md:grid-cols-2 gap-4'>
             <div>
               <label className='block text-sm font-medium text-gray-700 mb-1'>Koordinat</label>
-              <input
-                type='text'
-                readOnly
-                value={`${position[0].toFixed(6)}, ${position[1].toFixed(6)}`}
-                className='w-full border rounded-lg px-3 py-2 bg-gray-100 text-sm'
-              />
+              <input type='text' readOnly value={`${position[0].toFixed(6)}, ${position[1].toFixed(6)}`} className='w-full border rounded-lg px-3 py-2 bg-gray-100 text-sm' />
             </div>
 
             <div className='flex items-end'>
-              <button className='w-full bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600 transition'>
-                Simpan Lokasi
-              </button>
+              <button className='w-full bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600 transition'>Simpan Lokasi</button>
             </div>
           </div>
         </div>

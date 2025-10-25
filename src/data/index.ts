@@ -11,7 +11,7 @@ interface BussinesInfo {
   contacsInfo: ContacsInfo
 }
 
-export const bussinesInfo = {
+export const businesInfo = {
   name: 'JAMU234',
   description: 'JAMU TRADISIONAL DENGAN REMPAH ASLI DAN TANPA PEMANIS BUATAN',
   logoPath: '/234.png',

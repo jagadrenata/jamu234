@@ -1,7 +1,7 @@
 'use client'
 import { useEffect } from 'react'
 import { useProductsStore } from '@/store/store'
-import { bussinesInfo } from '@/data'
+import { businesInfo } from '@/data'
 import Navbar from '../components/Navbar'
 import Card from '../components/Card'
 import Footer from '../components/Footer'
@@ -31,9 +31,9 @@ export default function Home() {
               className={`${fraunces.className} text-6xl font-bold bg-gradient-to-b from-brown-400/100 via-brown-400/100 to-orange-500/100 bg-clip-text text-transparent`}
               style={{ textShadow: '4px 4px 4px rgba(0,0,0,0.1 )' }}
             >
-              {bussinesInfo.name ?? 'bussinesInfo.name'}
+              {businesInfo.name ?? 'businesInfo.name'}
             </h1>
-            <p>{bussinesInfo.description ?? 'bussinesInfo.description'}</p>
+            <p>{businesInfo.description ?? 'businesInfo.description'}</p>
           </div>
 
           <div className='mt-20'>

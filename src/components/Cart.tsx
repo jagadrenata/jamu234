@@ -96,14 +96,20 @@ export default function Cart({ closeCart }: Props) {
       if (!isConfirmed) return
 
       await deleteCart(id)
-      alertSuccess('Item berhasil dihapus', null, 1000)} catch (err) {
-  if (err instanceof Error) {
-    alertError('Gagal menghapus item', err.message)
-  } else {
-    alertError('Gagal menghapus item', String(err))
+      setCartDatas(cartDatas.filter((item) => item.id !== id))
+      alertSuccess('Item berhasil dihapus', null, 1000)
+    } catch (err) {
+      if (err instanceof Error) {
+        alertError('Gagal menghapus item', err.message)
+      } else {
+        alertError('Gagal menghapus item', String(err))
+      }
+    }
   }
-}
 
+  const handleUpdateQuantity = async (id: number, newQty: number) => {
+    await updateQuantity(id, newQty)
+    setCartDatas(cartDatas.map((item) => (item.id === id ? { ...item, quantity: newQty } : item)))
   }
   return (
     <>
@@ -149,11 +155,17 @@ export default function Cart({ closeCart }: Props) {
                   <span className='text-sm font-semibold text-orange-600 mt-1'>{formatRupiah(cart.price || 0)}</span>
                   <div className='flex w-full justify-between'>
                     <div className='flex items-center gap-4 mt-2'>
-                      <button className='w-7 h-7 border rounded flex items-center justify-center text-lg hover:bg-gray-100' onClick={() => updateQuantity(cart.id, (cart.quantity || 1) - 1)}>
+                      <button
+                        className='w-7 h-7 border rounded flex items-center justify-center text-lg hover:bg-gray-100'
+                        onClick={() => handleUpdateQuantity(cart.id, Math.max(1, (cart.quantity || 1) - 1))}
+                      >
                         -
                       </button>
                       <span className='font-semibold text-gray-800'>{cart.quantity || 1}</span>
-                      <button className='w-7 h-7 border rounded flex items-center justify-center text-lg hover:bg-gray-100' onClick={() => updateQuantity(cart.id, (cart.quantity || 1) + 1)}>
+                      <button
+                        className='w-7 h-7 border rounded flex items-center justify-center text-lg hover:bg-gray-100'
+                        onClick={() => handleUpdateQuantity(cart.id, Math.max(1, (cart.quantity || 1) + 1))}
+                      >
                         +
                       </button>
                     </div>
