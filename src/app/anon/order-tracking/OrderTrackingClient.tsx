@@ -45,6 +45,7 @@ export default function OrderTrackingClient() {
   const searchParams = useSearchParams()
   const queryName = searchParams.get('name') || ''
   const queryPhone = searchParams.get('phone') || ''
+  const queryEmail = searchParams.get('email') || ''
   const queryOrderId = searchParams.get('id') || searchParams.get('orderid')
 
   useEffect(() => {
@@ -119,25 +120,9 @@ export default function OrderTrackingClient() {
       <h1 className='text-2xl font-bold text-center mb-4 text-orange-500'>Lacak Pesanan Anonim</h1>
 
       <div className='bg-white shadow-md p-4 rounded-lg space-y-3'>
-        <input
-          type='text'
-          placeholder='Nama penerima'
-          className='w-full border p-2 rounded focus:ring-2 focus:ring-orange-400'
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <input
-          type='text'
-          placeholder='Nomor HP'
-          className='w-full border p-2 rounded focus:ring-2 focus:ring-orange-400'
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-        />
-        <button
-          onClick={() => handleSearch()}
-          disabled={loading}
-          className='bg-orange-500 hover:bg-orange-600 text-white w-full p-2 rounded font-medium transition'
-        >
+        <input type='text' placeholder='Nama penerima' className='w-full border p-2 rounded focus:ring-2 focus:ring-orange-400' value={name} onChange={(e) => setName(e.target.value)} />
+        <input type='text' placeholder='Nomor HP' className='w-full border p-2 rounded focus:ring-2 focus:ring-orange-400' value={phone} onChange={(e) => setPhone(e.target.value)} />
+        <button onClick={() => handleSearch()} disabled={loading} className='bg-orange-500 hover:bg-orange-600 text-white w-full p-2 rounded font-medium transition'>
           {loading ? 'Mencari...' : 'Cari Pesanan'}
         </button>
       </div>
@@ -150,11 +135,7 @@ export default function OrderTrackingClient() {
                 <h2 className='font-semibold text-lg text-orange-500'>Pesanan #{order.id}</h2>
                 <span
                   className={`text-sm font-medium px-3 py-1 rounded-full ${
-                    order.status === 'pending'
-                      ? 'bg-orange-100 text-orange-800'
-                      : order.status === 'completed'
-                      ? 'bg-green-100 text-green-800'
-                      : 'bg-gray-100 text-gray-800'
+                    order.status === 'pending' ? 'bg-orange-100 text-orange-800' : order.status === 'completed' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
                   }`}
                 >
                   {order.status}
@@ -168,13 +149,7 @@ export default function OrderTrackingClient() {
               <div className='space-y-3'>
                 {order.items.map((item, i) => (
                   <div key={i} className='flex gap-3 items-center border-t pt-2'>
-                    <Image
-                      src={item.img}
-                      alt={item.productName}
-                      width={60}
-                      height={60}
-                      className='rounded-lg object-cover w-16 h-16 border'
-                    />
+                    <Image src={item.img} alt={item.productName} width={60} height={60} className='rounded-lg object-cover w-16 h-16 border' />
                     <div className='flex-1'>
                       <p className='font-medium'>{item.productName}</p>
                       {item.variantName && <p className='text-sm text-gray-600'>Varian: {item.variantName}</p>}

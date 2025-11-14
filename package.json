@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.2",
+    "jsonwebtoken": "^9.0.2",
     "leaflet": "^1.9.4",
     "midtrans-client": "^1.4.3",
     "next": "15.4.6",
@@ -26,6 +27,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/leaflet": "^1.9.21",
     "@types/node": "^20",
     "@types/react": "^19",

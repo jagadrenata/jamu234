@@ -17,11 +17,11 @@ interface Props {
 export default function Card({ product }: Props) {
   return (<Link
   href={`/product/${product.id}`}
-  className='group block w-full max-w-sm bg-white border border-gray-200 rounded-xl shadow-md hover:shadow-lg hover:border-orange-400 active:scale-95 active:opacity-90 transition-all duration-200'
+  className='group block w-full max-w-sm bg-white border border-gray-200 rounded shadow-md hover:shadow-lg hover:border-orange-400 active:scale-95 active:opacity-90 transition-all duration-200'
 >
 
       {/* Gambar Produk */}
-      <div className='overflow-hidden rounded-t-xl'>
+      <div className='overflow-hidden rounded-t'>
         <Image
           src={product.img[0]}
           alt={product.name}

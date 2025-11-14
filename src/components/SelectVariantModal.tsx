@@ -49,7 +49,7 @@ export default function SelectVariantModal({ onClose, product }: Props) {
   return (
     <>
       {/* Overlay */}
-      <div onClick={onClose} className='fixed top-0 left-0 w-screen h-screen bg-black/50 z-40'></div>
+      <div onClick={onClose} className='fixed top-0 left-0 w-screen max-w-5xl h-screen bg-black/50 z-40'></div>
 
       {/* Modal Bottom Sheet */}
       <div className='fixed bottom-0 left-0 w-full max-h-[90vh] bg-white rounded-t-2xl shadow-lg z-50 overflow-y-auto animate-slide-up'>
@@ -60,7 +60,7 @@ export default function SelectVariantModal({ onClose, product }: Props) {
             height={80}
             src={selectedVariant?.img?.[0] || selectedVariant?.products?.img?.[0] || '/234.png'}
             alt={selectedVariant?.name || 'Product'}
-            className='w-20 h-20 rounded-lg object-cover'
+            className='w-20 h-20 rounded object-cover'
           />
           <div className='flex flex-col'>
 <span className='text-lg font-semibold text-gray-800'>
@@ -79,12 +79,12 @@ export default function SelectVariantModal({ onClose, product }: Props) {
             {product.map((variant: Product) => (
               <label
                 key={variant.id}
-                className={`flex items-center justify-center border rounded-lg cursor-pointer text-sm transition ${
+                className={`flex items-center justify-center border rounded cursor-pointer text-sm transition ${
                   selectedVariant?.id === variant.id ? 'bg-orange-500 text-white border-orange-500' : 'hover:bg-orange-50'
                 }`}
                 onClick={() => handleSelect(variant)}
               >
-                <span className='px-3 py-2 w-full h-full flex items-center justify-center rounded-md'>{variant.name}</span>
+                <span className='px-3 py-2 w-full h-full flex items-center justify-center rounded'>{variant.name}</span>
               </label>
             ))}
           </div>
@@ -94,7 +94,7 @@ export default function SelectVariantModal({ onClose, product }: Props) {
         <div className='p-4 space-y-3 flex items-center justify-between'>
           <div>
             <h3 className='text-base font-semibold text-gray-700 mb-2'>Jumlah</h3>
-            <div className='mt-1 inline-flex items-center border border-gray-200 rounded-md overflow-hidden'>
+            <div className='mt-1 inline-flex items-center border border-gray-200 rounded overflow-hidden'>
               <button className='px-3 py-1 text-lg' onClick={() => setQuantity((q) => Math.max(1, q - 1))}>
                 -
               </button>
@@ -108,7 +108,7 @@ export default function SelectVariantModal({ onClose, product }: Props) {
 
         {/* Footer */}
         <div className='p-4 border-t'>
-          <button onClick={handleAddToCart} className='w-full py-3 bg-orange-500 text-white font-semibold rounded-lg hover:bg-orange-600 transition'>
+          <button onClick={handleAddToCart} className='w-full py-3 bg-orange-500 text-white font-semibold rounded hover:bg-orange-600 transition'>
             Masukkan Keranjang
           </button>
         </div>

@@ -117,16 +117,14 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
   return (
     <div className='min-h-screen bg-white text-slate-900'>
       {/* Navbar */}
-      <nav className='sticky top-0 z-30 bg-white/80 backdrop-blur-sm border-b border-gray-100'>
+      <nav className='sticky top-0 z-30 bg-gradient-to-b from-black/60 to-transparent '>
         <div className='max-w-5xl mx-auto flex items-center justify-between px-4 py-3'>
-          <button className='flex items-center gap-2 text-sm text-slate-700'>
-            <span className='inline-block w-8 h-8 rounded-full bg-orange-50 text-orange-600 flex items-center justify-center'>&lt;</span>
+          <button className='flex items-center gap-2 text-sm text-white'>
+            <span className='inline-block w-8 h-8 text-slate-700 bg-white rounded-full p-2 flex items-center justify-center'>&lt;</span>
             <span className='hidden sm:inline'>{selectedVariant?.title || 'Memuat...'}</span>
           </button>
-          <button className='flex items-center gap-2 text-sm text-slate-700'>
+          <button className='flex items-center gap-2 text-sm text-slate-700 bg-white rounded-full p-2'>
             <IoCartOutline className='cursor-pointer text-2xl' onClick={() => setShowCart(true)} />
-            <span className='hidden sm:inline'>Keranjang</span>
-            <span className='ml-1 inline-flex items-center justify-center px-2 py-0.5 text-xs rounded-full bg-orange-100 text-orange-700'>3</span>
           </button>
         </div>
       </nav>
@@ -135,7 +133,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
       <main className='max-w-5xl mx-auto px-4 py-6 grid grid-cols-1 md:grid-cols-3 gap-6'>
         {/* Left */}
         <section className='md:col-span-2 flex flex-col gap-4'>
-          <div className='rounded-lg overflow-hidden border border-gray-100 shadow-sm'>
+          <div className='rounded overflow-hidden border border-gray-100 shadow-sm'>
             {selectedVariant?.images?.[0] ? (
               <img src={currentImage || selectedVariant?.images?.[0]} alt={selectedVariant.title} loading='lazy' className='w-full h-auto object-cover' />
             ) : (
@@ -145,7 +143,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
 
           <div className='flex gap-3 overflow-x-auto pb-2'>
             {allImage?.map((src, i) => (
-              <button key={i} onClick={() => handleImageClick(src)} className='flex-shrink-0 rounded-lg overflow-hidden border border-gray-100 shadow-sm w-20 h-20 md:w-24 md:h-24'>
+              <button key={i} onClick={() => handleImageClick(src)} className='flex-shrink-0 rounded overflow-hidden border border-gray-100 shadow-sm w-20 h-20 md:w-24 md:h-24'>
                 <img src={src} alt={`thumb-${i}`} className='w-full h-full object-cover' />
               </button>
             ))}
@@ -155,7 +153,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
 
         {/* Right */}
         <aside className='md:col-span-1 flex flex-col gap-4'>
-          <div className='rounded-lg border border-gray-100 p-4 shadow-sm'>
+          <div className='rounded border border-gray-100 p-4 shadow-sm'>
             <div className='flex items-baseline justify-between gap-2'>
               <h2 className='text-2xl font-semibold'>
                 {selectedVariant ? `Rp ${selectedVariant.price?.toLocaleString('id-ID')}` : <span className='bg-gray-200 text-transparent animate-pulse rounded'>Rp...</span>}
@@ -193,7 +191,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
           </div>
 
           {/* Tombol */}
-          <div className='rounded-lg border border-gray-100 p-4 shadow-sm flex flex-col gap-3'>
+          <div className='rounded border border-gray-100 p-4 shadow-sm flex flex-col gap-3'>
             <div className='flex items-center justify-between'>
               <div className='text-right'>
                 <p className='text-xs text-slate-500'>Subtotal</p>
@@ -204,12 +202,12 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
             <div className='flex gap-3'>
               <button
                 onClick={() => setShowModalVariant(true)}
-                className='flex-1 py-3 rounded-lg text-white bg-orange-500 hover:bg-orange-600 active:bg-orange-700 shadow-md disabled:bg-gray-300'
+                className='flex-1 py-3 rounded text-white bg-orange-500 hover:bg-orange-600 active:bg-orange-700 shadow-md disabled:bg-gray-300'
                 disabled={!selectedVariant}
               >
                 Tambah ke Keranjang
               </button>
-              <button className='w-14 h-12 rounded-lg border border-orange-500 text-orange-600 flex items-center justify-center'>♡</button>
+              <button className='w-14 h-12 rounded border border-orange-500 text-orange-600 flex items-center justify-center'>♡</button>
             </div>
           </div>
         </aside>

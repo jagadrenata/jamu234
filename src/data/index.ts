@@ -16,7 +16,7 @@ export const businesInfo = {
   description: 'JAMU TRADISIONAL DENGAN REMPAH ASLI DAN TANPA PEMANIS BUATAN',
   logoPath: '/234.png',
   contacsInfo: {
-    whatsapp: '0882006186099',
+    whatsapp: '6283113367276', //+62 831-1336-7276 '0882006186099',
     instagram: '@jagadrenata', //awali dengan @
     location: [123, 123], //long, lat
   },

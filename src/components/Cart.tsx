@@ -130,7 +130,7 @@ export default function Cart({ closeCart }: Props) {
             Array.from({ length: 3 }).map((_, i) => (
               <div key={i} className='flex items-center gap-3 p-4 border-b border-gray-200 animate-pulse'>
                 <div className='w-5 h-5 bg-gray-300 rounded'></div> {/* checkbox placeholder */}
-                <div className='w-20 h-20 bg-gray-300 rounded-lg'></div> {/* image placeholder */}
+                <div className='w-20 h-20 bg-gray-300 rounded'></div> {/* image placeholder */}
                 <div className='flex-1 flex flex-col gap-2'>
                   <div className='h-4 bg-gray-300 rounded w-3/4'></div> {/* name */}
                   <div className='h-3 bg-gray-300 rounded w-1/2'></div> {/* variant */}
@@ -148,7 +148,7 @@ export default function Cart({ closeCart }: Props) {
             cartDatas.map((cart) => (
               <div key={cart.id} className='flex items-center gap-3 p-4 border-b border-gray-200'>
                 <input type='checkbox' className='w-5 h-5 accent-orange-500' checked={selectedCarts.includes(cart.id)} onChange={() => toggleSelect(cart.id)} />
-                <Image width={80} height={80} src={cart.img || '/234.png'} className='w-20 h-20 object-cover border rounded-lg' alt='produk' />
+                <Image width={80} height={80} src={cart.img || '/234.png'} className='w-20 h-20 object-cover border rounded' alt='produk' />
                 <div className='flex flex-col w-full'>
                   <span className='text-lg font-medium text-gray-800'>{cart.name || 'Judul Produk'}</span>
                   <span className='text-sm text-gray-500'>Varian: {cart.variant_name || '500ml'}</span>
@@ -188,19 +188,17 @@ export default function Cart({ closeCart }: Props) {
           <Link href='/checkout'>
             <button
               disabled={selectedCarts.length === 0}
-              className={`w-full py-3 px-5 rounded-lg shadow transition ${
-                selectedCarts.length === 0 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-orange-500 text-white hover:bg-orange-600'
-              }`}
+              className={`w-full mb-3 py-3 px-5 rounded shadow transition ${selectedCarts.length === 0 ? 'bg-gray-300 text-gray-500 cursor-not-allowed' : 'bg-orange-500 text-white hover:bg-orange-600'}`}
             >
               Beli Sekarang ({selectedCarts.length})
             </button>
           </Link>
 
-          <button onClick={clearSelection} className='w-full py-3 px-5 border border-orange-500 text-orange-500 rounded-lg hover:bg-orange-50 transition'>
+          <button onClick={clearSelection} className='w-full py-3 px-5 border border-orange-500 text-orange-500 rounded hover:bg-orange-50 transition'>
             Hapus Pilihan
           </button>
 
-          <button onClick={closeCart} className='w-full py-3 px-5 border border-gray-300 text-gray-600 rounded-lg hover:bg-gray-50 transition'>
+          <button onClick={closeCart} className='w-full py-3 px-5 border border-gray-300 text-gray-600 rounded hover:bg-gray-50 transition'>
             Lanjut Belanja
           </button>
         </div>

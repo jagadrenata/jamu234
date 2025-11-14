@@ -7,12 +7,13 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { businesInfo } from '@/data'
 import { alertSuccess, alertError } from '@/lib/alert'
+import type { FormEvent } from 'react'
 
 export default function Home() {
   const router = useRouter()
 
   const [data, setData] = useState({ email: '', password: '' })
-  const [isSignup, setIsSignup] = useState(false)
+  const [isSignup, setIsSignup] = useState(true)
 
   const { user, setUser, setLoading, setError, loading, error } = useAuthStore()
 
@@ -107,148 +108,115 @@ export default function Home() {
     }
   }
 
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    setLoading(true)
+    try {
+      if (isSignup) {
+        signUp(data.email, data.password)
+      } else {
+        signIn(data.email, data.password)
+      }
+    } catch (err) {
+      setError('Terjadi kesalahan.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
-    <main className='p-4 w-screen h-screen justify-center items-center flex flex-col bg-gray-50'>
-      {/* Logo & Nama Bisnis */}
-      <div className='flex flex-col items-center mb-6'>
-        <Image src={businesInfo.logoPath ?? '/234.png'} alt='Logo Bisnis' width={64} height={64} className='rounded-lg' />
-        <h1 className='text-2xl font-semibold mt-2 text-gray-800'>{businesInfo.name.charAt(0).toUpperCase() + businesInfo.name.slice(1).toLowerCase()}</h1>
+    <main className='flex flex-col md:flex-row h-screen w-screen bg-gradient-to-br from-gray-100 via-blue-50 to-gray-200'>
+      {/* Left Side - Illustration */}
+      <div className='hidden md:flex w-1/2 relative items-center justify-center overflow-hidden bg-gradient-to-br from-orange-500 to-red-600 text-white'>
+        <div className="absolute inset-0 bg-[url('/20250904_211642_0000.png')] bg-cover bg-center opacity-30" />
+        <div className='relative z-10 text-center px-10'>
+          <h1 className='text-4xl font-bold mb-4'>Selamat Datang di {businesInfo.name}</h1>
+          <p className='text-lg opacity-90'>{businesInfo.description}</p>
+        </div>
       </div>
 
-      {error && <p className='text-red-500 mb-3'>{error}</p>}
-      {loading && <p>Memuat...</p>}
+      {/* Right Side - Auth Form */}
+      <div className='flex w-full md:w-1/2 items-center justify-center p-6 md:p-12'>
+        <div className='backdrop-blur-md bg-white/70 border border-white/30 shadow-xl rounded w-full max-w-md p-8 transition-all duration-300'>
+          {/* Logo */}
+          <div className='flex flex-col items-center mb-6'>
+            <Image src={businesInfo.logoPath ?? '/234.png'} alt='Logo Bisnis' width={64} height={64} className='rounded shadow-md' />
+            <h2 className='text-2xl font-semibold mt-3 text-gray-800'>{businesInfo.name.charAt(0).toUpperCase() + businesInfo.name.slice(1).toLowerCase()}</h2>
+          </div>
 
-      {isSignup ? (
-        // Form Login
-        <div className='w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8'>
-          <form
-            className='space-y-6'
-            action='#'
-            onSubmit={async (e) => {
-              e.preventDefault()
-              await signIn(data.email, data.password)
-            }}
-          >
-            <h5 className='text-xl font-medium text-gray-900'>Masuk ke platform kami</h5>
+          {/* Error Message */}
+          {error && <p className='text-red-500 text-center mb-4'>{error}</p>}
+          {loading && <p className='text-center text-gray-500 mb-3'>Memuat...</p>}
+
+          <form onSubmit={handleSubmit} className='space-y-5'>
+            <h3 className='text-xl font-medium text-gray-900 text-center'>{isSignup ? 'Buat Akun Baru' : 'Masuk ke Akun Anda'}</h3>
 
             <div>
-              <label htmlFor='email' className='block mb-2 text-sm font-medium text-gray-900'>
-                Email Anda
+              <label htmlFor='email' className='block text-sm font-medium text-gray-700 mb-1'>
+                Email
               </label>
               <input
-                type='email'
-                name='email'
                 id='email'
+                type='email'
                 value={data.email}
-                onChange={(e) => setData((prev) => ({ ...prev, email: e.target.value }))}
-                className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5'
+                onChange={(e) => setData((p) => ({ ...p, email: e.target.value }))}
                 placeholder='nama@perusahaan.com'
                 required
+                className='w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none'
               />
             </div>
 
             <div>
-              <label htmlFor='password' className='block mb-2 text-sm font-medium text-gray-900'>
+              <label htmlFor='password' className='block text-sm font-medium text-gray-700 mb-1'>
                 Kata Sandi
               </label>
               <input
-                type='password'
-                name='password'
                 id='password'
-                placeholder='••••••••'
+                type='password'
                 value={data.password}
-                onChange={(e) => setData((prev) => ({ ...prev, password: e.target.value }))}
-                className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5'
+                onChange={(e) => setData((p) => ({ ...p, password: e.target.value }))}
+                placeholder='••••••••'
                 required
+                className='w-full px-4 py-2 rounded border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none'
               />
             </div>
 
-            <div className='flex items-start justify-between'>
-              <label className='flex items-center text-sm font-medium text-gray-900'>
-                <input id='remember' type='checkbox' className='w-4 h-4 border border-gray-300 rounded-sm bg-gray-50 focus:ring-3 focus:ring-gray-300 me-2' />
-                Ingat saya
-              </label>
-              <a href='#' className='text-sm text-blue-700 hover:underline'>
-                Lupa kata sandi?
-              </a>
-            </div>
+            {!isSignup && (
+              <div className='flex justify-between items-center text-sm'>
+                <label className='flex items-center gap-2 text-gray-700'>
+                  <input type='checkbox' className='w-4 h-4 text-blue-600 rounded focus:ring-blue-400' />
+                  Ingat saya
+                </label>
+                <a href='#' className='text-orange-600 hover:underline'>
+                  Lupa sandi?
+                </a>
+              </div>
+            )}
 
-            <button
-              type='submit'
-              className='w-full text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center'
-            >
-              Masuk ke akun Anda
+            <button type='submit' className='w-full py-2.5 bg-orange-500 hover:bg-blue-700 text-white rounded font-semibold shadow-md transition'>
+              {isSignup ? 'Daftar Sekarang' : 'Masuk'}
             </button>
 
-            <div className='text-sm font-medium text-gray-500 text-center'>
-              Belum punya akun?{' '}
-              <button type='button' className='text-blue-700 hover:underline' onClick={() => setIsSignup(!isSignup)}>
-                Daftar
-              </button>
+            <div className='text-center text-sm text-gray-600'>
+              {isSignup ? (
+                <>
+                  Sudah punya akun?{' '}
+                  <button type='button' onClick={() => setIsSignup(false)} className='text-orange-600 hover:underline'>
+                    Masuk
+                  </button>
+                </>
+              ) : (
+                <>
+                  Belum punya akun?{' '}
+                  <button type='button' onClick={() => setIsSignup(true)} className='text-orange-600 hover:underline'>
+                    Daftar
+                  </button>
+                </>
+              )}
             </div>
           </form>
         </div>
-      ) : (
-        // Form Daftar
-        <div className='w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8'>
-          <form
-            className='space-y-6'
-            action='#'
-            onSubmit={async (e) => {
-              e.preventDefault()
-              await signUp(data.email, data.password)
-            }}
-          >
-            <h5 className='text-xl font-medium text-gray-900'>Daftar ke platform kami</h5>
-
-            <div>
-              <label htmlFor='email' className='block mb-2 text-sm font-medium text-gray-900'>
-                Email Anda
-              </label>
-              <input
-                type='email'
-                name='email'
-                id='email'
-                value={data.email}
-                onChange={(e) => setData((prev) => ({ ...prev, email: e.target.value }))}
-                className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5'
-                placeholder='nama@perusahaan.com'
-                required
-              />
-            </div>
-
-            <div>
-              <label htmlFor='password' className='block mb-2 text-sm font-medium text-gray-900'>
-                Kata Sandi
-              </label>
-              <input
-                type='password'
-                name='password'
-                id='password'
-                placeholder='••••••••'
-                value={data.password}
-                onChange={(e) => setData((prev) => ({ ...prev, password: e.target.value }))}
-                className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5'
-                required
-              />
-            </div>
-
-            <button
-              type='submit'
-              className='w-full text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center'
-            >
-              Daftar Sekarang
-            </button>
-
-            <div className='text-sm font-medium text-gray-500 text-center'>
-              Sudah punya akun?{' '}
-              <button type='button' className='text-blue-700 hover:underline' onClick={() => setIsSignup(!isSignup)}>
-                Masuk
-              </button>
-            </div>
-          </form>
-        </div>
-      )}
+      </div>
     </main>
   )
 }

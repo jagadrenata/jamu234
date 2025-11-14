@@ -27,6 +27,7 @@ function MapClickHandler({ center, radius, onChange, LReady }) {
 
 export default function Map({ position, onChange, radius = 1200 }) {
   const [LReady, setLReady] = useState(null)
+  const [mapCenter] = useState(position)
   const markerRef = useRef(null)
 
   useEffect(() => {
@@ -47,12 +48,11 @@ export default function Map({ position, onChange, radius = 1200 }) {
 
   if (typeof window === 'undefined' || !LReady) return null
 
-  const mapCenter = [position.lat, position.lng]
   const markerPos = [position.lat, position.lng]
 
   return (
     <div className="relative w-full h-64 rounded-lg overflow-hidden border">
-      <MapContainer center={mapCenter} zoom={15} className="h-full w-full">
+      <MapContainer center={[mapCenter.lat, mapCenter.lng]} zoom={15} className="h-full w-full">
         <TileLayer
           attribution="&copy; OpenStreetMap contributors"
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -71,7 +71,7 @@ export default function Map({ position, onChange, radius = 1200 }) {
         />
 
         <Circle
-          center={mapCenter}
+          center={[mapCenter.lat, mapCenter.lng]}
           radius={radius}
           pathOptions={{
             color: '#3b82f6',
@@ -80,7 +80,7 @@ export default function Map({ position, onChange, radius = 1200 }) {
           }}
         />
 
-        <MapClickHandler center={position} radius={radius} onChange={onChange} LReady={LReady} />
+        <MapClickHandler center={mapCenter} radius={radius} onChange={onChange} LReady={LReady} />
       </MapContainer>
 
       <div className="absolute top-2 right-2 bg-white/90 text-xs px-2 py-1 rounded-md shadow">

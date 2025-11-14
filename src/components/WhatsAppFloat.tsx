@@ -1,10 +1,11 @@
 'use client'
 import React from 'react'
 import Image from 'next/image'
+import { businesInfo } from '@/data'
 
 const WhatsAppFloat = () => {
   return (
-    <a href='https://wa.me/62882006186099' target='_blank' rel='noopener noreferrer' className='fixed bottom-5 right-5 w-16 h-16 z-50 hover:scale-110 transition-transform animate-bounce'>
+    <a href={`https://wa.me/${businesInfo.contacsInfo.whatsapp}`} target='_blank' rel='noopener noreferrer' className='fixed bottom-5 right-5 w-16 h-16 z-50 hover:scale-110 transition-transform animate-bounce'>
       <Image
         src='/images/WhatsApp.svg.png' // taruh file icon WA di folder public
         alt='WhatsApp'

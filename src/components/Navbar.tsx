@@ -92,7 +92,7 @@ const Navbar = () => {
             <div className='flex items-center gap-4'>
               <a
                 href='/auth'
-                className='bg-orange-500 px-5 py-2 rounded-full text-white font-semibold 
+                className='bg-orange-500 px-5 py-2 rounded text-white font-semibold 
                 hover:bg-orange-600 transition-colors cursor-pointer hidden md:block'
               >
                 Login

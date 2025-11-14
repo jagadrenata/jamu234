@@ -1,5 +1,6 @@
 'use client'
 import { useEffect } from 'react'
+import Link from 'next/link'
 import { useProductsStore } from '@/store/store'
 import { businesInfo } from '@/data'
 import Navbar from '../components/Navbar'
@@ -34,6 +35,15 @@ export default function Home() {
               {businesInfo.name ?? 'businesInfo.name'}
             </h1>
             <p>{businesInfo.description ?? 'businesInfo.description'}</p>
+          </div>
+
+          <div className='w-full flex gap-4 my-8'>
+            <Link href='/feedback?type=saran' className='w-1/2 py-3 px-5 rounded shadow transition bg-orange-500 text-center text-white hover:bg-orange-600'>
+              Saran/Masukkan
+            </Link>
+            <Link href='/feedback?type=gangguan' className='w-1/2 text-center py-3 px-5 border border-orange-500 text-orange-500 rounded hover:bg-orange-50 transition'>
+              Gangguan/Keluhan
+            </Link>
           </div>
 
           <div className='mt-20'>
